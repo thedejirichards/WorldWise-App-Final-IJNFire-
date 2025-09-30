@@ -44,3 +44,8 @@ export type CitiesContextType = {
   setCurrentCity: React.Dispatch<React.SetStateAction<CityType  | null>>;
   fetchCity: (id: string)=> void
 };
+
+export type GeolocationPositionType = {
+  lat: string | number;
+  lng: string | number;
+}
