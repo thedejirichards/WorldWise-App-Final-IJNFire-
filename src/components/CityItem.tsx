@@ -3,6 +3,7 @@ import type { CityItemType } from "../types/type";
 import styles from "./CityItem.module.css";
 import Spinner from "./Spinner";
 import { Link } from "react-router-dom";
+import { useCities } from "../contexts/CitiesContext";
 
 const BASE_URL = "https://flagsapi.com";
 function CityItem({ city }: CityItemType) {
@@ -25,10 +26,15 @@ function CityItem({ city }: CityItemType) {
       setImgLoading(false);
     }
   }, [emoji]);
-
+  const { currentCity } = useCities();
   return (
     <li>
-      <Link to={`${id}?lat=${position.lat} &lng=${position.lng}`} className={styles.cityItem}>
+      <Link
+        to={`${id}?lat=${position.lat} &lng=${position.lng}`}
+        className={`${styles.cityItem} ${
+          currentCity?.id === id ? styles["cityItem--active"] : ""
+        }`}
+      >
         <span className={styles.emoji}>
           {isImgLoading ? (
             <Spinner />

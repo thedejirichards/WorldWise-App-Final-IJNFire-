@@ -1,7 +1,9 @@
 import { useParams, useSearchParams } from "react-router-dom";
 import styles from "./City.module.css";
-import { useEffect, useState } from "react";
-import type { CityType } from "../types/type";
+import { useEffect } from "react";
+import { useCities } from "../contexts/CitiesContext";
+import Spinner from "./Spinner";
+import BackButton from "./BackButton";
 
 const formatDate = (date: string) =>
   new Intl.DateTimeFormat("en", {
@@ -11,32 +13,34 @@ const formatDate = (date: string) =>
     weekday: "long",
   }).format(new Date(date));
 
-const BASE_URL = "http://localhost:8000/cities";
 function City() {
-  const [currentCity, setCurrentCity] = useState<CityType | null>(null);
+  const { currentCity, fetchCity, isLoading } = useCities();
   const { id } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
   const lat = searchParams.get("lat");
   const lng = searchParams.get("lng");
 
-  // TEMP DATA
   useEffect(() => {
-    const fetchCity = async () => {
-      const res = await fetch(`${BASE_URL}/${id}`);
-      const data = await res.json();
-      setCurrentCity(data);
-    };
-    fetchCity();
+    if (id) fetchCity(id);
   }, [id]);
+
   if (!currentCity) return;
   const { cityName, emoji, date, notes } = currentCity;
-
+  
+  console.log(isLoading)
+  if (isLoading) return <Spinner />;
   return (
     <div className={styles.city}>
       <div className={styles.row}>
         <h6>City name</h6>
         <h3>
-          <span>{emoji}</span> {cityName}
+          <span>
+            <img
+              src={`https://flagsapi.com/${emoji}/shiny/64.png`}
+              alt={emoji}
+            />
+          </span>{" "}
+          {cityName}
         </h3>
       </div>
 
@@ -63,7 +67,9 @@ function City() {
         </a>
       </div>
 
-      <div>{/* <ButtonBack /> */}</div>
+      <div>
+        <BackButton />
+      </div>
     </div>
   );
 }

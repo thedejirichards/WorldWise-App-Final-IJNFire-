@@ -31,6 +31,16 @@ export type CountryType = {
 
 export type ButtonType = {
   children: React.ReactNode;
-  onClick: (e: React.MouseEvent<HTMLButtonElement>)=> void;
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
   type: string;
-}
+};
+
+export type CitiesContextType = {
+  cities: CityType[] | null;
+  setCities: React.Dispatch<React.SetStateAction<CityType[] | null>>;
+  isLoading: boolean;
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  currentCity: CityType  | null;
+  setCurrentCity: React.Dispatch<React.SetStateAction<CityType  | null>>;
+  fetchCity: (id: string)=> void
+};

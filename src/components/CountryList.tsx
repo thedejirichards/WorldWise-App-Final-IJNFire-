@@ -1,9 +1,11 @@
-import type { CityType, CountryListType, CountryType } from "../types/type";
+import { useCities } from "../contexts/CitiesContext";
+import type { CityType, CountryType } from "../types/type";
 import styles from "./CityList.module.css";
 import CountryItem from "./CountryItem";
 import Message from "./Message";
 import Spinner from "./Spinner";
-function CountriesList({ cities, isLoading }: CountryListType) {
+function CountriesList() {
+  const {cities, isLoading} = useCities()
   if (isLoading) return <Spinner />;
   if (!cities?.length) return <Message message="There are no Countries here" />;
   const countries = cities.reduce((arr: CountryType[], city: CityType) => {
