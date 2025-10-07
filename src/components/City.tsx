@@ -1,4 +1,4 @@
-import { useParams, useSearchParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import styles from "./City.module.css";
 import { useEffect } from "react";
 import { useCities } from "../contexts/CitiesContext";
@@ -16,18 +16,17 @@ const formatDate = (date: string) =>
 function City() {
   const { currentCity, fetchCity, isLoading } = useCities();
   const { id } = useParams();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const lat = searchParams.get("lat");
-  const lng = searchParams.get("lng");
+  
+  // const [searchParams, setSearchParams] = useSearchParams();
+  // const lat = searchParams.get("lat");
+  // const lng = searchParams.get("lng");
 
   useEffect(() => {
     if (id) fetchCity(id);
-  }, [id]);
+  }, [id, fetchCity]);
 
   if (!currentCity) return;
   const { cityName, emoji, date, notes } = currentCity;
-  
-  console.log(isLoading)
   if (isLoading) return <Spinner />;
   return (
     <div className={styles.city}>
@@ -46,7 +45,7 @@ function City() {
 
       <div className={styles.row}>
         <h6>You went to {cityName} on</h6>
-        <p>{formatDate(date)}</p>
+        <p>{formatDate(String(date))}</p>
       </div>
 
       {notes && (

@@ -26,7 +26,11 @@ function CityItem({ city }: CityItemType) {
       setImgLoading(false);
     }
   }, [emoji]);
-  const { currentCity } = useCities();
+  const { currentCity,  deleteCity } = useCities();
+  const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if(id) deleteCity(id)
+  }
   return (
     <li>
       <Link
@@ -46,8 +50,13 @@ function CityItem({ city }: CityItemType) {
           )}
         </span>
         <h3 className={styles.name}>{cityName}</h3>
-        <time className={styles.date}>{formatDate(date)}</time>
-        <button className={styles.deleteBtn}>&times;</button>
+        <time className={styles.date}>{formatDate(String(date))}</time>
+        <button
+          className={styles.deleteBtn}
+          onClick={handleClick}
+        >
+          &times;
+        </button>
       </Link>
     </li>
   );

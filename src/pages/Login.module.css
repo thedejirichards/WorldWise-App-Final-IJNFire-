@@ -24,3 +24,17 @@
   flex-direction: column;
   gap: 0.5rem;
 }
+
+
+.emParent{
+  display: flex;
+  justify-content: center;
+}
+.em {
+  background: red;
+  display: flex;          
+  justify-content: center; 
+  align-items: center;
+  width: fit-content;
+  padding: 10px 20px;
+}

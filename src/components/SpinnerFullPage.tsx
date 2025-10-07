@@ -5,6 +5,7 @@ function SpinnerFullPage() {
   return (
     <div className={styles.spinnerFullpage}>
       <Spinner />
+      sldl
     </div>
   );
 }
